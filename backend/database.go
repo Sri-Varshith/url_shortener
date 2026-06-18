@@ -42,3 +42,16 @@ func GetURLByCode(code string) (string, error) {
 
 	return url, err
 }
+
+func UpdateURL(code string, url string) error {
+	_, err := DB.Exec(
+		context.Background(),
+		`UPDATE urls
+		 SET url = $1
+		 WHERE short_code = $2`,
+		url,
+		code,
+	)
+
+	return err
+}

@@ -46,7 +46,23 @@ func RedirectURL(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateShortURL(w http.ResponseWriter, r *http.Request) {
+	code := chi.URLParam(r, "code")
 
+	var req URLRequest
+
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		http.Error(w, err.Error(), 400)
+		return
+	}
+
+	err = UpdateURL(code, req.URL)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 func DeleteShortURL(w http.ResponseWriter, r *http.Request) {
