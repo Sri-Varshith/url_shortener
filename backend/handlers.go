@@ -66,7 +66,15 @@ func UpdateShortURL(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteShortURL(w http.ResponseWriter, r *http.Request) {
+	code := chi.URLParam(r, "code")
 
+	err := DeleteURL(code)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func GetStats(w http.ResponseWriter, r *http.Request) {

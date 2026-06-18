@@ -55,3 +55,14 @@ func UpdateURL(code string, url string) error {
 
 	return err
 }
+
+func DeleteURL(code string) error {
+	_, err := DB.Exec(
+		context.Background(),
+		`DELETE FROM urls
+		 WHERE short_code = $1`,
+		code,
+	)
+
+	return err
+}
