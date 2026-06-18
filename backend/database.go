@@ -66,3 +66,33 @@ func DeleteURL(code string) error {
 
 	return err
 }
+
+func IncrementAccessCount(code string) error {
+	_, err := DB.Exec(
+		context.Background(),
+		`UPDATE urls
+		 SET access_count = access_count + 1
+		 WHERE short_code = $1`,
+		code,
+	)
+
+	return err
+}
+
+func GetURLStats(code string) (StatsResponse, error) {
+	var data StatsResponse
+
+	err := DB.QueryRow(
+		context.Background(),
+		`SELECT url, short_code, access_count
+		 FROM urls
+		 WHERE short_code = $1`,
+		code,
+	).Scan(
+		&data.URL,
+		&data.ShortCode,
+		&data.AccessCount,
+	)
+
+	return data, err
+}

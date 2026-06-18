@@ -20,3 +20,9 @@ type URLRequest struct {
 type ShortCodeResponse struct {
 	ShortCode string `json:"shortCode"`
 }
+
+type StatsResponse struct {
+	URL         string `json:"url"`
+	ShortCode   string `json:"shortCode"`
+	AccessCount int    `json:"accessCount"`
+}

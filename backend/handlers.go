@@ -41,6 +41,7 @@ func RedirectURL(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "URL not found", http.StatusNotFound)
 		return
 	}
+	err = IncrementAccessCount(code)
 
 	http.Redirect(w, r, url, http.StatusFound)
 }
@@ -78,5 +79,14 @@ func DeleteShortURL(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetStats(w http.ResponseWriter, r *http.Request) {
+	code := chi.URLParam(r, "code")
 
+	data, err := GetURLStats(code)
+	if err != nil {
+		http.Error(w, "URL not found", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
 }
