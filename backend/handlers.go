@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
+	"net/http"
 )
 
 func CreateShortURL(w http.ResponseWriter, r *http.Request) {
@@ -12,8 +12,22 @@ func CreateShortURL(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 400)
 		return
 	}
-	shortCode := GenerateCode()
-	
+	var shortCode string
+	for i := 0; i < 5; i++ {
+		shortCode = GenerateCode()
+		err := CreateURL(url.URL, shortCode)
+		if err == nil {
+			break
+		}
+	}
+	response := ShortCodeResponse{
+		ShortCode: shortCode,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+
+	json.NewEncoder(w).Encode(response)
 
 }
 

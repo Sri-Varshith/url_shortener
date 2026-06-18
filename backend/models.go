@@ -16,3 +16,7 @@ type URLData struct {
 type URLRequest struct {
 	URL string `json:"url"`
 }
+
+type ShortCodeResponse struct {
+	ShortCode string `json:"shortCode"`
+}
