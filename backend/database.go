@@ -19,3 +19,14 @@ func ConnectDB(databaseURL string) {
 
 	log.Println("Connected to database")
 }
+
+func CreateURL(url string, shortCode string) error {
+	_, err := DB.Exec(
+		context.Background(),
+		`INSERT INTO urls (url, short_code)
+		 VALUES ($1, $2)`,
+		url,
+		shortCode,
+	)
+	return err
+}
