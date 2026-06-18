@@ -1,6 +1,10 @@
 package main
 
-import "os"
+import (
+	"os"
+
+	"github.com/joho/godotenv"
+)
 
 type Config struct {
 	DatabaseURL string
@@ -8,6 +12,8 @@ type Config struct {
 }
 
 func LoadConfig() Config {
+	godotenv.Load()
+
 	return Config{
 		DatabaseURL: os.Getenv("DATABASE_URL"),
 		Port:        os.Getenv("PORT"),
