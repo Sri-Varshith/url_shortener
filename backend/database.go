@@ -30,3 +30,15 @@ func CreateURL(url string, shortCode string) error {
 	)
 	return err
 }
+
+func GetURLByCode(code string) (string, error) {
+	var url string
+
+	err := DB.QueryRow(
+		context.Background(),
+		`SELECT url FROM urls WHERE short_code = $1`,
+		code,
+	).Scan(&url)
+
+	return url, err
+}

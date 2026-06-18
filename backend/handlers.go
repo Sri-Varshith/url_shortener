@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+
+	"github.com/go-chi/chi/v5"
 )
 
 func CreateShortURL(w http.ResponseWriter, r *http.Request) {
@@ -31,8 +33,16 @@ func CreateShortURL(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetShortURL(w http.ResponseWriter, r *http.Request) {
+func RedirectURL(w http.ResponseWriter, r *http.Request) {
+	code := chi.URLParam(r, "code")
 
+	url, err := GetURLByCode(code)
+	if err != nil {
+		http.Error(w, "URL not found", http.StatusNotFound)
+		return
+	}
+
+	http.Redirect(w, r, url, http.StatusFound)
 }
 
 func UpdateShortURL(w http.ResponseWriter, r *http.Request) {

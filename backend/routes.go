@@ -9,7 +9,7 @@ func SetupRoutes() *chi.Mux {
 
 	r.Post("/shorten", CreateShortURL)
 
-	r.Get("/shorten/{code}", GetShortURL)
+	r.Get("/{code}", RedirectURL)
 
 	r.Put("/shorten/{code}", UpdateShortURL)
 
