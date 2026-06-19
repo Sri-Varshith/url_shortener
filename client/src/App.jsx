@@ -1,4 +1,11 @@
+
+
+import { useState } from "react"
+
 function App() {
+
+    const [url, setUrl] = useState("")
+
   return (
     <div className="relative min-h-screen bg-black flex items-center justify-center px-4 overflow-hidden">
 <div className="absolute h-96 w-96 bg-blue-500/20 rounded-full blur-3xl -top-20 -left-20" />
@@ -18,22 +25,12 @@ function App() {
             type="text"
             placeholder="https://example.com"
             className="w-full rounded-2xl bg-black/30 border border-white/10 px-5 py-4 text-white outline-none focus:border-blue-500 transition"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              className="w-full rounded-2xl bg-black/30 border border-white/10 px-5 py-4 text-white outline-none focus:border-blue-500 transition"
           />
 
-          <button
-className="
-w-full mt-4
-rounded-2xl
-bg-gradient-to-r
-from-blue-500
-to-purple-500
-text-white
-font-semibold
-py-4
-hover:scale-[1.02]
-transition-all
-duration-300
-"
+          <button className="w-full mt-4 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 text-white  font-semibold py-4 hover:scale-[1.02] transition-all duration-300"
           >
             Shorten URL
           </button>
