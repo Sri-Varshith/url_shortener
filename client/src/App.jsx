@@ -5,6 +5,7 @@ import { useState } from "react"
 function App() {
 
     const [url, setUrl] = useState("")
+    const [shortCode, setShortCode] = useState("")
 
     const handleSubmit = async () => {
       const response = await fetch(
@@ -20,9 +21,16 @@ function App() {
         }
       )
 
-      const data = await response.json()
-      console.log(data)
+    const data = await response.json()
+
+    setShortCode(data.shortCode)
     }
+
+    const copyToClipboard = async () => {
+      await navigator.clipboard.writeText(shortUrl)
+    }
+
+    const shortUrl = `http://localhost:8000/${shortCode}`
 
 
   return (
@@ -52,6 +60,23 @@ function App() {
           <button onClick={handleSubmit} className="w-full mt-4 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 text-white  font-semibold py-4 hover:scale-[1.02] transition-all duration-300"
           >
             Shorten URL
+          </button>
+
+          {shortCode && (
+            <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-4">
+              <p className="text-slate-400 text-sm">
+                Short URL
+              </p>
+
+              <p className="text-white mt-2">
+                {shortUrl}
+              </p>
+            </div>
+          )}
+          <button
+            onClick={copyToClipboard}
+            className="mt-4 w-full rounded-xl bg-white text-black py-3 font-semibold hover:opacity-90 transition">
+            Copy URL
           </button>
         </div>
       </div>
