@@ -9,7 +9,7 @@ function App() {
 
     const handleSubmit = async () => {
       const response = await fetch(
-        "http://localhost:8000/shorten",
+        "https://url-shortener-ov5m.onrender.com/shorten",
         {
           method: "POST",
           headers: {
@@ -30,8 +30,7 @@ function App() {
       await navigator.clipboard.writeText(shortUrl)
     }
 
-    const shortUrl = `http://localhost:8000/${shortCode}`
-
+const shortUrl =`https://url-shortener-ov5m.onrender.com/${shortCode}`
 
   return (
     <div className="relative min-h-screen bg-black flex items-center justify-center px-4 overflow-hidden">
