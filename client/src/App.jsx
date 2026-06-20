@@ -6,8 +6,11 @@ function App() {
 
     const [url, setUrl] = useState("")
     const [shortCode, setShortCode] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [copied, setCopied] = useState(false)
 
     const handleSubmit = async () => {
+      setLoading(true)
       const response = await fetch(
         "https://url-shortener-ov5m.onrender.com/shorten",
         {
@@ -24,10 +27,17 @@ function App() {
     const data = await response.json()
 
     setShortCode(data.shortCode)
+    setLoading(false)
     }
 
     const copyToClipboard = async () => {
       await navigator.clipboard.writeText(shortUrl)
+
+      setCopied(true)
+
+      setTimeout(() => {
+        setCopied(false)
+      }, 2000)
     }
 
 const shortUrl =`https://url-shortener-ov5m.onrender.com/${shortCode}`
@@ -56,9 +66,9 @@ const shortUrl =`https://url-shortener-ov5m.onrender.com/${shortCode}`
               className="w-full rounded-2xl bg-black/30 border border-white/10 px-5 py-4 text-white outline-none focus:border-blue-500 transition"
           />
 
-          <button onClick={handleSubmit} className="w-full mt-4 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 text-white  font-semibold py-4 hover:scale-[1.02] transition-all duration-300"
+          <button onClick={handleSubmit} className="w-full mt-4 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 text-white  font-semibold py-4 hover:scale-[1.02] transition-all duration-300" disabled={loading}
           >
-            Shorten URL
+          {loading ? "Shortening..." : "Shorten URL"}
           </button>
 
           {shortCode && (
@@ -75,7 +85,7 @@ const shortUrl =`https://url-shortener-ov5m.onrender.com/${shortCode}`
           <button
             onClick={copyToClipboard}
             className="mt-4 w-full rounded-xl bg-white text-black py-3 font-semibold hover:opacity-90 transition">
-            Copy URL
+            {copied ? "Copied!!" : "Copy URL"}
           </button>
         </div>
       </div>
