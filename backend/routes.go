@@ -11,7 +11,7 @@ func SetupRoutes() *chi.Mux {
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins: []string{
 			"http://localhost:5173",
-			"https://url-shortener-sv.vercel.app/",
+			"https://url-shortener-sv.vercel.app",
 		},
 		AllowedMethods: []string{
 			"GET",
